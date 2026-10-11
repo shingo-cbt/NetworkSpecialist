@@ -8,11 +8,11 @@ tags: [ネスペ, ICMP, ネットワーク層]
 
 ## 1. ICMPの基本（○）
 
-- IP通信の**エラー通知**と**診断**のためのプロトコル。ネットワーク層で動く
+- IP（Internet Protocol）通信の**エラー通知**と**診断**のためのプロトコル。ネットワーク層で動く
 - IPヘッダのプロトコル番号は**1**（ICMPv6は**58**）
 - ヘッダ先頭は **Type（種類）／Code（詳細）／Checksum**
 - エラーメッセージには**元のIPヘッダとデータ先頭8バイト**を入れて返す → 送信元はどの通信（ポート番号）のエラーか特定できる
-- 午前の誤り選択肢の定番：「ICMPはTCP／UDPの上で動く」→ 誤り
+- 午前の誤り選択肢の定番：「ICMP（Internet Control Message Protocol）はTCP（Transmission Control Protocol）／UDP（User Datagram Protocol）の上で動く」→ 誤り
 
 ## 2. ICMPv4の主なメッセージ
 
@@ -22,7 +22,7 @@ tags: [ネスペ, ICMP, ネットワーク層]
 | 3 | Destination Unreachable | 宛先に届かない。詳細はCodeで表す | ◎（Code 4） |
 | 5 | Redirect | 同一セグメント内の、より適切なルータをホストに通知 | ○ |
 | 8 | Echo Request | pingの要求 | ○ |
-| 11 | Time Exceeded | TTLが0になって破棄。tracerouteで利用 | ◎ |
+| 11 | Time Exceeded | TTL（Time To Live）が0になって破棄。tracerouteで利用 | ◎ |
 | 12 | Parameter Problem | IPヘッダの値が不正 | △ |
 | 4 | Source Quench | 送信抑制。廃止済み | △ |
 
@@ -34,7 +34,7 @@ tags: [ネスペ, ICMP, ネットワーク層]
 | 1 | Host Unreachable | 宛先ホストに届かない | △ |
 | 2 | Protocol Unreachable | 宛先がそのプロトコルに未対応 | △ |
 | 3 | Port Unreachable | 宛先ポートが待ち受けていない（UDP） | △（traceroute文脈で○） |
-| 4 | Fragmentation Needed and DF set | DFのため分割不可。**PMTUD**で利用 | ◎ |
+| 4 | Fragmentation Needed and DF（Don't Fragment） set | DFのため分割不可。**PMTUD**で利用 | ◎ |
 | 13 | Administratively Prohibited | フィルタで拒否された | △ |
 
 ### Type 11（時間超過）のCode
@@ -53,26 +53,26 @@ tags: [ネスペ, ICMP, ネットワーク層]
 | 128 | Echo Request | ping | △ |
 | 129 | Echo Reply | ping応答 | △ |
 | 133 | RS（Router Solicitation） | ホスト→ルータ「ルータいる？」 | ◎ |
-| 134 | RA（Router Advertisement） | ルータ→ホスト。プレフィックス通知（SLAAC） | ◎ |
-| 135 | NS（Neighbor Solicitation） | ARP要求の代わり、DAD（重複アドレス検出） | ◎ |
+| 134 | RA（Router Advertisement） | ルータ→ホスト。プレフィックス通知（SLAAC：Stateless Address Autoconfiguration） | ◎ |
+| 135 | NS（Neighbor Solicitation） | ARP（Address Resolution Protocol）要求の代わり、DAD（Duplicate Address Detection、重複アドレス検出） | ◎ |
 | 136 | NA（Neighbor Advertisement） | ARP応答の代わり | ◎ |
 | 137 | Redirect | v4のType 5に相当 | △ |
 
-- 133〜137はNDP（近隣探索プロトコル）。ARPの役割をICMPv6が担う
+- 133〜137はNDP（Neighbor Discovery Protocol、近隣探索プロトコル）。ARPの役割をICMPv6が担う
 - NDPは**Type番号より名前と役割の対応**が問われる
 
 ### IPv6ではARPとRARPが不要（○）
 
-- **IPv6にはARPもRARPもない**。それぞれの役割をICMPv6（NDP）などが引き継いだ
+- **IPv6にはARPもRARP（Reverse ARP）もない**。それぞれの役割をICMPv6（NDP）などが引き継いだ
 
 | IPv4 | 役割 | IPv6での代わり |
 |---|---|---|
-| **ARP** | 相手のIPアドレスからMACアドレスを知る | **NDPのNS／NA**（ICMPv6） |
+| **ARP** | 相手のIPアドレスからMAC（Media Access Control）アドレスを知る | **NDPのNS／NA**（ICMPv6） |
 | **RARP** | 自分のMACアドレスから自分のIPアドレスを知る | **SLAAC**（RAで受けたプレフィックス＋自分で作るインタフェースID）、**DHCPv6** |
 | Gratuitous ARP | 重複検出、MACアドレス変更の通知 | **DAD**（NS）、**非要請NA** |
 
 - ARPはブロードキャストを使うが、NSは**マルチキャスト（要請ノードマルチキャストアドレス）**宛てに送る → 関係ない端末の負荷が減る
-- RARPはIPv4でもすでにBOOTP／DHCPに置き換わっていた
+- RARPはIPv4でもすでにBOOTP（Bootstrap Protocol）／DHCP（Dynamic Host Configuration Protocol）に置き換わっていた
 - 午前の誤り選択肢の定番：「IPv6でもARPでMACアドレスを解決する」→ 誤り
 - → [[Gratuitous ARP]]
 
@@ -80,15 +80,26 @@ tags: [ネスペ, ICMP, ネットワーク層]
 
 ### ◎ PMTUDとICMP遮断（PMTUDブラックホール）
 
+- **経路MTU（Path MTU）**：送信元から宛先までの経路上の各リンクのMTUのうち、**一番小さい値**
+  - 例：端末 →（Ethernet 1500）→ ルータA →（PPPoE（Point-to-Point Protocol over Ethernet） 1454）→ ルータB →（Ethernet 1500）→ サーバ なら、経路MTUは **1454**
+- **PMTUD（Path MTU Discovery）**：経路MTUを見つけ、そのサイズで送ることで、途中での分割（フラグメント）を避ける仕組み
 - 流れ
   1. DFビット付きのパケットがMTUの小さい区間に入る
   2. ルータが **Type 3 / Code 4** を返す（次ホップのMTU値も通知）
-  3. 送信元はサイズを小さくして再送する
-- FWでこのICMPを遮断 → 大きいパケットだけ届かない
+  3. 送信元はサイズを小さくして再送する。もっと細い区間があれば、また次のICMPが返り、さらに下げる
+- **何で検知するか**：送信元が自分で経路を調べるのではなく、**通れなかったときにルータから返るICMPの中の「次ホップのMTU値」**で知る
+  - 記述の型：「ルータから返されるICMPメッセージに含まれる、次の区間のMTU値によって検知する」
+  - 分かった経路MTUは**宛先ごとに保持**し、一定時間後に大きいサイズで試し直す（経路が変わる可能性があるため）
+- **IPv6の場合**
+  - 返るのは **ICMPv6 Type 2（Packet Too Big）**。中身（次ホップのMTU値）の役割は同じ
+  - **IPv6では途中のルータは分割しない**（分割は送信元だけが行う。IPv6ヘッダにはDFビット自体がない）→ **PMTUDが必須**
+  - そのため**ICMPv6を丸ごと遮断すると、大きいパケットが一切届かなくなる**
+  - IPv6のリンクの最小MTUは**1280バイト**（△）
+- FW（Firewall）でこのICMPを遮断 → 大きいパケットだけ届かない
 - 問われ方：「一部の通信（大きいデータ）だけ失敗する原因」「FWで許可すべき通信」
 - 対策
   - FWで該当ICMPを許可する
-  - ルータで **TCP MSSを小さく書き換える（MSSクランプ）**。PPPoE、IPsec、GREなどMTUが減る構成とセットで出る
+  - ルータで **TCP MSS（Maximum Segment Size）を小さく書き換える（MSSクランプ）**。PPPoE、IPsec（Security Architecture for Internet Protocol）、GRE（Generic Routing Encapsulation）などMTUが減る構成とセットで出る
 - 記述の型：「ICMPのフラグメント要求が破棄され、送信元が経路MTUを検出できないから」
 
 ### ◎ tracerouteの仕組み
@@ -117,7 +128,7 @@ tags: [ネスペ, ICMP, ネットワーク層]
 ### ○ pingによる疎通確認
 
 - Echo Request（8）→ Echo Reply（0）
-- 問われ方：FWフィルタへのICMP追加、監視でICMPを返さない機器を検知できない、冗長構成（VRRPなど）の切替確認
+- 問われ方：FWフィルタへのICMP追加、監視でICMPを返さない機器を検知できない、冗長構成（VRRP（Virtual Router Redundancy Protocol）など）の切替確認
 
 ### △ ICMPエラーを返さないケース（知識として持つ程度）
 
@@ -141,4 +152,4 @@ tags: [ネスペ, ICMP, ネットワーク層]
 4. 残りは午前の過去問で出たら確認する程度でよい
 
 > [!tip] 得点につながる覚え方
-> ICMPは単独で大問になるより、**FW設計、VPN、IPv6移行の問題の中で「なぜ通信できないか」の理由として**出る。番号の暗記より、「どのICMPを止めると何が壊れるか」で覚える。
+> ICMPは単独で大問になるより、**FW設計、VPN（Virtual Private Network）、IPv6移行の問題の中で「なぜ通信できないか」の理由として**出る。番号の暗記より、「どのICMPを止めると何が壊れるか」で覚える。

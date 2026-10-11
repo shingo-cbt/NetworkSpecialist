@@ -8,26 +8,26 @@ tags: [ネスペ, 無線LAN, IEEE802.11, データリンク層]
 
 ## 1. IEEE802.11の基本（○）
 
-- 無線LANの**物理層とMAC副層**の規格。上位から見るとEthernetと同じくMACアドレスで通信する
-- アクセス制御は **CSMA/CA**（有線EthernetはCSMA/CD）
-- **半二重**で、ACKや待ち時間のオーバヘッドが大きい → **実効速度は規格上の最大値の半分以下**が目安
+- 無線LAN（Local Area Network）の**物理層とMAC（Media Access Control）副層**の規格。上位から見るとEthernetと同じくMACアドレスで通信する
+- アクセス制御は **CSMA/CA**（Carrier Sense Multiple Access with Collision Avoidance）。有線EthernetはCSMA/CD（Carrier Sense Multiple Access with Collision Detection）
+- **半二重**で、ACK（Acknowledgement）や待ち時間のオーバヘッドが大きい → **実効速度は規格上の最大値の半分以下**が目安
 - 用語
-  - **BSS**：1台のAPとその配下の端末の集まり。識別子は **BSSID**（通常はAPの無線側MACアドレス）
-  - **ESS**：複数のBSSを同じSSIDで束ねたもの。識別子は **ESSID（＝SSID、最大32オクテット）**
-  - **IBSS**：APを介さないアドホック通信
+  - **BSS**（Basic Service Set）：1台のAP（Access Point）とその配下の端末の集まり。識別子は **BSSID**（BSS Identifier、通常はAPの無線側MACアドレス）
+  - **ESS**（Extended Service Set）：複数のBSSを同じSSID（Service Set Identifier）で束ねたもの。識別子は **ESSID（Extended Service Set Identifier、＝SSID、最大32オクテット）**
+  - **IBSS**（Independent BSS）：APを介さないアドホック通信
 - 午前の誤り選択肢の定番：「無線LANはCSMA/CDで衝突を検出する」→ 誤り（無線は送信中に衝突を検出できないため回避する）
 
 ## 2. 規格の一覧
 
 | 規格 | 通称 | 周波数帯 | 最大速度 | 主な技術・ポイント | 出題度 |
 |---|---|---|---|---|---|
-| 802.11b | − | 2.4GHz | 11Mbps | DSSS | △ |
-| 802.11a | − | 5GHz | 54Mbps | OFDM | △ |
+| 802.11b | − | 2.4GHz | 11Mbps | DSSS（Direct Sequence Spread Spectrum） | △ |
+| 802.11a | − | 5GHz | 54Mbps | OFDM（Orthogonal Frequency Division Multiplexing） | △ |
 | 802.11g | − | 2.4GHz | 54Mbps | OFDM。11bと互換 | △ |
-| 802.11n | Wi-Fi 4 | 2.4／5GHz | 600Mbps | OFDM＋**MIMO**、**チャネルボンディング**（40MHz） | ○ |
-| 802.11ac | Wi-Fi 5 | 5GHz | 6.9Gbps | OFDM、ボンディング（80／160MHz）、**下りMU-MIMO**、256QAM | ○ |
-| 802.11ax | Wi-Fi 6／6E | 2.4／5（／6）GHz | 9.6Gbps | **OFDMA**、ボンディング（160MHz）、上り下りMU-MIMO、1024QAM、BSSカラーリング、TWT | ◎ |
-| 802.11be | Wi-Fi 7 | 2.4／5／6GHz | 約46Gbps | ボンディング（320MHz）、**MLO**（複数帯域の同時利用） | △ |
+| 802.11n | Wi-Fi 4 | 2.4／5GHz | 600Mbps | OFDM＋**MIMO**（Multiple Input Multiple Output）、**チャネルボンディング**（40MHz） | ○ |
+| 802.11ac | Wi-Fi 5 | 5GHz | 6.9Gbps | OFDM、ボンディング（80／160MHz）、**下りMU-MIMO**（Multi-User MIMO）、256QAM | ○ |
+| 802.11ax | Wi-Fi 6／6E | 2.4／5（／6）GHz | 9.6Gbps | **OFDMA**（Orthogonal Frequency Division Multiple Access）、ボンディング（160MHz）、上り下りMU-MIMO、1024QAM、BSSカラーリング、TWT（Target Wake Time） | ◎ |
+| 802.11be | Wi-Fi 7 | 2.4／5／6GHz | 約46Gbps | ボンディング（320MHz）、**MLO**（Multi-Link Operation、複数帯域の同時利用） | △ |
 
 - **変調方式は11bだけがDSSSで、11a以降はすべてOFDM**（11ax以降はOFDMを複数端末で分け合うOFDMA）
 - **MIMO**：複数アンテナで複数ストリームを同時に送り、速度を上げる
@@ -37,7 +37,7 @@ tags: [ネスペ, 無線LAN, IEEE802.11, データリンク層]
   - 幅を2倍にすると速度もほぼ2倍
   - その代わり**使えるチャネルの数が減り、干渉しやすくなる**（5GHz帯の20MHzチャネル約20本が、40MHzで約10本、80MHzで約5本、160MHzで2本）
   - **2.4GHz帯では40MHzは実質使わない**：帯域が狭く、40MHzにすると重ならないチャネルがほぼ取れなくなる
-  - 広く束ねるとW53／W56を含みやすくなり、**DFSの影響も受けやすい**
+  - 広く束ねるとW53／W56を含みやすくなり、**DFS（Dynamic Frequency Selection）の影響も受けやすい**
 - **OFDMA**：チャネルをサブキャリア単位に分け、複数端末に割り当てる → **端末が多い環境（高密度）での効率改善**が11axの売り
 - 6Eは6GHz帯を使えるWi-Fi 6。DFSが不要で干渉が少ない
 
@@ -55,7 +55,7 @@ tags: [ネスペ, 無線LAN, IEEE802.11, データリンク層]
 | 区分 | チャネル | ポイント |
 |---|---|---|
 | W52 | 36〜48 | DFS不要。原則屋内 |
-| W53 | 52〜64 | **DFS／TPC必要**。屋内のみ |
+| W53 | 52〜64 | **DFS／TPC（Transmit Power Control）必要**。屋内のみ |
 | W56 | 100〜144 | **DFS必要**。屋外可 |
 
 - **DFS（動的周波数選択）**：気象レーダ等を検知したらAPがチャネルを移動する
@@ -67,17 +67,17 @@ tags: [ネスペ, 無線LAN, IEEE802.11, データリンク層]
 
 ### CSMA/CA（○）
 
-1. 送信前に電波を確認し、空いていても **DIFS＋ランダムなバックオフ時間** 待つ
+1. 送信前に電波を確認し、空いていても **DIFS（DCF Interframe Space）＋ランダムなバックオフ時間** 待つ
 2. 送信する
-3. 受信側は **SIFS** 後に **ACK** を返す。ACKが来なければ再送
+3. 受信側は **SIFS**（Short Interframe Space） 後に **ACK** を返す。ACKが来なければ再送
 
 ### 隠れ端末問題とRTS/CTS（◎）
 
 - 端末A・Cが互いの電波を受信できない（間に壁、距離）が、どちらもAPには届く → 同時送信してAPで衝突する
 - 対策：**RTS/CTS**
-  1. 端末がAPに **RTS（送信要求）** を送る
-  2. APが **CTS（送信許可）** を全端末に返す
-  3. CTSを受けた他の端末は **NAV** で指定された時間、送信を控える
+  1. 端末がAPに **RTS（Request To Send、送信要求）** を送る
+  2. APが **CTS（Clear To Send、送信許可）** を全端末に返す
+  3. CTSを受けた他の端末は **NAV**（Network Allocation Vector） で指定された時間、送信を控える
 - 記述の型：「互いの電波が届かない端末同士は送信を検知できず、APで衝突するから」
 
 ### フレームの種類（○）
@@ -95,7 +95,7 @@ tags: [ネスペ, 無線LAN, IEEE802.11, データリンク層]
    - アクティブ：端末が**プローブ要求**を送り、APが応答する
 2. **認証**（802.11のオープンシステム認証。形式的なもの）
 3. **アソシエーション**（APへの接続登録）
-4. **802.1X／EAP認証**（エンタープライズ方式の場合）→ [[IEEE802.1X]]
+4. **802.1X／EAP（Extensible Authentication Protocol）認証**（エンタープライズ方式の場合）→ [[IEEE802.1X]]
 5. **4ウェイハンドシェイク**で暗号鍵を生成 → [[WPA]]
 6. データ通信
 
@@ -129,18 +129,18 @@ tags: [ネスペ, 無線LAN, IEEE802.11, データリンク層]
 - 端末が電波状況を見て、**接続先APを自分で切り替える**（決めるのは端末側）
 - 802.1X認証を毎回やり直すと時間がかかり、音声通話などが途切れる
 - 高速化の方法
-  - **PMKキャッシュ**：過去に認証したAPに戻るとき鍵を再利用する
+  - **PMK（Pairwise Master Key）キャッシュ**：過去に認証したAPに戻るとき鍵を再利用する
   - **事前認証**：移動先APと先に認証しておく
-  - **802.11r（FT：高速BSS遷移）**：鍵交換を短縮する
+  - **802.11r（FT（Fast BSS Transition）：高速BSS遷移）**：鍵交換を短縮する
   - 802.11k（周辺APの情報提供）／802.11v（APから移動を促す）
-- 詳細 → [[ローミング]]
+- 詳細 → [[WPA]]（PMKキャッシュ）、[[IEEE802.1X]]（再認証）
 
 ### ○ 無線LANコントローラ（WLC）
 
 - 多数のAPを集中管理する。APは設定を持たない（**シンAP**）
-- AP–WLC間は **CAPWAP** トンネル（UDP 5246：制御、5247：データ）
+- AP–WLC（Wireless LAN Controller）間は **CAPWAP**（Control And Provisioning of Wireless Access Points） トンネル（UDP（User Datagram Protocol） 5246：制御、5247：データ）
 - チャネル・出力の自動調整、ローミング支援、ゲスト分離などをまとめて行う
-- 問われ方：「WLCを導入する利点」「AP–WLC間でFWに許可すべき通信」
+- 問われ方：「WLCを導入する利点」「AP–WLC間でFW（Firewall）に許可すべき通信」
 
 ### ○ 速度・容量の見積もり
 
@@ -150,7 +150,7 @@ tags: [ネスペ, 無線LAN, IEEE802.11, データリンク層]
 
 ### △ その他
 
-- APへの給電は **PoE（IEEE802.3af／at／bt）** で行うことが多い → 天井設置でも電源工事不要
+- APへの給電は **PoE（Power over Ethernet、IEEE802.3af／at／bt）** で行うことが多い → 天井設置でも電源工事不要
 - 同一AP配下の端末同士の通信を禁止する **プライバシーセパレータ（APアイソレーション）**：ゲスト向けで出る
 
 ## 7. 覚え方
@@ -176,5 +176,4 @@ tags: [ネスペ, 無線LAN, IEEE802.11, データリンク層]
 ## 9. 関連
 
 - [[WPA]]（暗号化・4ウェイハンドシェイク）
-- [[IEEE802.1X]]（認証、RADIUS、EAP）
-- [[ローミング]]
+- [[IEEE802.1X]]（認証、RADIUS（Remote Authentication Dial In User Service）、EAP）

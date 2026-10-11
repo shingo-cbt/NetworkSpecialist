@@ -8,20 +8,20 @@ tags: [ネスペ, WebSocket, HTTP, アプリケーション層]
 
 ## 1. WebSocketの基本（○）
 
-- **1本のTCPコネクション上で、サーバとクライアントが双方向に通信する**ためのプロトコル（RFC 6455）
-- 最初は **HTTPで接続し、Upgradeでプロトコルを切り替える**。以降はHTTPではなくWebSocketのフレームでやり取りする
+- **1本のTCP（Transmission Control Protocol）コネクション上で、サーバとクライアントが双方向に通信する**ためのプロトコル（RFC（Request for Comments） 6455）
+- 最初は **HTTP（Hypertext Transfer Protocol）で接続し、Upgradeでプロトコルを切り替える**。以降はHTTPではなくWebSocketのフレームでやり取りする
 - サーバから**任意のタイミングでプッシュ**できる（HTTPはクライアントの要求に応答するだけ）
 - **全二重**で、1回接続すればコネクションを張りっぱなしにする
 - フレームのヘッダは2〜14バイトと小さい → HTTPのように毎回ヘッダを送らないので**オーバヘッドが小さい**
-- URIスキームとポート
+- URI（Uniform Resource Identifier）スキームとポート
 
 | スキーム | 下位 | ポート |
 |---|---|---|
 | `ws://` | TCP | 80 |
-| `wss://` | TLS（TCP） | 443 |
+| `wss://` | TLS（Transport Layer Security、TCP） | 443 |
 
 - 用途：チャット、株価・ダッシュボードのリアルタイム更新、オンラインゲーム、IoTの監視、Web会議のシグナリング
-- 午前の誤り選択肢の定番：「WebSocketはUDPで通信する」→ 誤り（TCP）
+- 午前の誤り選択肢の定番：「WebSocketはUDP（User Datagram Protocol）で通信する」→ 誤り（TCP）
 
 ## 2. ハンドシェイク（◎）
 
@@ -77,7 +77,7 @@ Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 | ポーリング | クライアントが定期的にHTTP要求する | 更新がなくても通信する。間隔の分だけ遅れる |
 | ロングポーリング | 要求をサーバが保留し、更新があったら応答する | 応答のたびに要求をやり直す。ヘッダのオーバヘッド |
 | SSE（Server-Sent Events） | HTTP応答を開いたままサーバから流し続ける | **サーバ→クライアントの片方向のみ** |
-| **WebSocket** | 1本のTCPで全二重 | プロキシ・LB・FWでの考慮が必要 |
+| **WebSocket** | 1本のTCPで全二重 | プロキシ・LB（Load Balancer）・FW（Firewall）での考慮が必要 |
 
 - 問われ方：「ポーリングと比べた利点」→ **通信量（ヘッダ）とサーバ負荷の削減、遅延の短縮**
 - 記述の型：「サーバから任意のタイミングで送信でき、HTTPのように要求ごとにヘッダを送る必要がないから」
@@ -87,7 +87,7 @@ Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 ### ◎ 無通信タイムアウトによる切断
 
 - WebSocketは**コネクションを長時間張りっぱなし**にする
-- 経路上のFW、NAPT、プロキシ、負荷分散装置には**無通信タイマ**がある → 無通信が続くとセッション情報を消され、コネクションが切れる
+- 経路上のFW、NAPT（Network Address Port Translation）、プロキシ、負荷分散装置には**無通信タイマ**がある → 無通信が続くとセッション情報を消され、コネクションが切れる
 - 対策
   - アプリで **Ping／Pong を定期的に送る**（タイマより短い間隔）
   - 機器側の無通信タイマを長くする
@@ -114,14 +114,14 @@ Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 
 ### ○ FWの設定
 
-- 宛先ポートは **80／443** で、HTTP／HTTPSと区別しにくい
+- 宛先ポートは **80／443** で、HTTP／HTTPS（HTTP Secure）と区別しにくい
 - 通信開始は**クライアントから**のTCP接続なので、FWは内→外の許可（戻りはステートフルで通る）で足りる。サーバからのプッシュでも、外から新しく接続しに来るわけではない
 - 問われ方：「サーバからプッシュするのに、外→内の許可ルールが要らない理由」
 - 記述の型：「クライアントが確立したTCPコネクション上でサーバが送信するため、新たな着信は発生しないから」
 
 ### △ セキュリティ
 
-- ブラウザの同一オリジンポリシーはWebSocketにはそのままは効かない → サーバが **Originヘッダを検証**する（CSWSH：クロスサイトWebSocketハイジャック対策）
+- ブラウザの同一オリジンポリシーはWebSocketにはそのままは効かない → サーバが **Originヘッダを検証**する（CSWSH（Cross-Site WebSocket Hijacking）：クロスサイトWebSocketハイジャック対策）
 - 認証はハンドシェイク時（Cookie、トークン）に行う
 
 ## 6. 覚え方
