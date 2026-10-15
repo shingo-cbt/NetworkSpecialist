@@ -18,7 +18,7 @@ tags: [ネスペ, FW, ファイアウォール, セキュリティ]
 | アプリケーションゲートウェイ | アプリケーション層の中身 | プロキシとして中継する | △ |
 | **次世代FW（NGFW：Next Generation Firewall）**／UTM（Unified Threat Management） | **アプリケーションの種類**、利用者、URL（Uniform Resource Locator） | IPS（Intrusion Prevention System）、URLフィルタリング、ウイルス対策などを1台で行う | ○ |
 
-- **WAF（Web Application Firewall）**との違い：WAFは**Webアプリケーションへの攻撃（SQLインジェクション、XSS（Cross-Site Scripting）など）をHTTP（Hypertext Transfer Protocol）の中身で検知**する。FWはアドレスとポートで止める（○）
+- **WAF**（Web Application Firewall）との違い：WAFは**Webアプリケーションへの攻撃（SQLインジェクション、XSS（Cross-Site Scripting）など）をHTTP（Hypertext Transfer Protocol）の中身で検知**する。FWはアドレスとポートで止める（○）
 
 ## 2. フィルタリングルール（◎）
 
@@ -83,7 +83,7 @@ tags: [ネスペ, FW, ファイアウォール, セキュリティ]
 | | IDS（侵入検知） | IPS（侵入防止） |
 |---|---|---|
 | 動き | 攻撃を**検知して通知**する（止めない） | 攻撃を**検知して遮断**する |
-| 置き方 | **ミラーポート**やTAP（Test Access Point）で通信の**複製**を見る（経路の外） | **通信の経路の中（インライン）**に置く |
+| 置き方 | **ミラーポート**やTAP（Test Access Point）で通信の**複製**を見る（経路の外） | **通信の経路の中**（インライン）に置く |
 | 故障したとき | 業務の通信には影響しない | **通信が止まる**おそれ → 故障時は素通しにする機能（バイパス、フェイルオープン）や冗長化 |
 | 誤検知したとき | 通知が出るだけ | **正規の通信まで遮断**してしまう |
 

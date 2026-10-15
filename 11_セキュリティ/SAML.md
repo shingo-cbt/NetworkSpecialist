@@ -10,7 +10,7 @@ tags: [ネスペ, SAML, SSO, IdP, 認証, セキュリティ]
 
 ## 1. SAMLの基本（○）
 
-- **SAML（Security Assertion Markup Language）**：**異なる組織・サービスの間でシングルサインオン（SSO（Single Sign-On））**を実現する仕組み。認証の結果をXML（Extensible Markup Language）形式で受け渡す
+- **SAML（Security Assertion Markup Language）**：**異なる組織・サービスの間でシングルサインオン**（SSO（Single Sign-On））を実現する仕組み。認証の結果をXML（Extensible Markup Language）形式で受け渡す
 - 登場人物
 
 | 役割 | 正体 | 仕事 |
@@ -43,7 +43,7 @@ tags: [ネスペ, SAML, SSO, IdP, 認証, セキュリティ]
 - 事前の準備：**SPとIdPの間で信頼関係を結ぶ**
   - SPに**IdPの公開鍵証明書**（とIdPの識別子、URL（Uniform Resource Locator））を登録する
   - IdPにSPの情報（識別子、アサーションの送り先）を登録する
-- ②でSPがリダイレクト先のIdPを決めるには、**利用者の所属組織（どのIdPを使うか）**の情報が必要（令和5年春 午後Ⅱ 問2の解答）
+- ②でSPがリダイレクト先のIdPを決めるには、**利用者の所属組織**（どのIdPを使うか）の情報が必要（令和5年春 午後Ⅱ 問2の解答）
 
 ## 3. なぜ安全か（◎）
 
@@ -109,7 +109,7 @@ tags: [ネスペ, SAML, SSO, IdP, 認証, セキュリティ]
 5. OAuth・OpenID Connectとの違いは一言で言える程度でよい
 
 > [!tip] 得点につながる覚え方
-> SAMLの問題では、**利用者・SP・IdPの3者の間の矢印**を書き、**アサーションを誰が作り（IdP、秘密鍵で署名）、誰が確かめるか（SP、公開鍵で検証）**を押さえる。設問のほとんどはこの関係から答えが出る。
+> SAMLの問題では、**利用者・SP・IdPの3者の間の矢印**を書き、**アサーションを誰が作り（IdP、秘密鍵で署名）、誰が確かめるか**（SP、公開鍵で検証）を押さえる。設問のほとんどはこの関係から答えが出る。
 
 ## 9. 関連
 

@@ -24,7 +24,7 @@ tags: [ネスペ, VoIP, SIP, RTP, IP電話, アプリケーション層]
 ## 2. SIPの登場人物と流れ（○）
 
 - **SIPサーバ**
-  - **レジストラ**：電話機の「今このIPアドレスにいる」という**登録（REGISTER）**を受け付ける
+  - **レジストラ**：電話機の「今このIPアドレスにいる」という**登録**（REGISTER）を受け付ける
   - **プロキシサーバ**：発信の要求（INVITE）を相手まで中継する
 - 発信の流れ
 
@@ -49,7 +49,7 @@ tags: [ネスペ, VoIP, SIP, RTP, IP電話, アプリケーション層]
 - 音声は**遅延・揺らぎ（ジッタ）・パケット損失に弱い**。遅れて届いたデータは使えないので**再送しない（UDPを使う）**
 - 目安：片方向の遅延は150ms以内
 - **ジッタバッファ**：受信側で少し溜めてから再生し、揺らぎを吸収する（その分、遅延が増える）
-- 対策：**QoS（Quality of Service）**で音声を優先する（DSCP（Differentiated Services Code Point）をEF（Expedited Forwarding）に）、**音声用VLAN（Virtual LAN）**を分ける
+- 対策：**QoS**（Quality of Service）で音声を優先する（DSCP（Differentiated Services Code Point）をEF（Expedited Forwarding）に）、**音声用VLAN**（Virtual LAN）を分ける
 - **必要な帯域の計算**（G.711、20ms間隔）：1通話で片方向 **約80kbps（IPレベル）** → 同時通話数を掛ける
 - → [[QoS]]
 
@@ -57,7 +57,7 @@ tags: [ネスペ, VoIP, SIP, RTP, IP電話, アプリケーション層]
 
 ### ◎ NAPTを越えられない問題
 
-- SDPには**電話機のIPアドレスとポート番号**が書かれている → **NAPT（Network Address Port Translation）**はアプリケーションのデータの中を書き換えないので、**プライベートアドレスのまま相手に届き、音声が届かない**（FTP（File Transfer Protocol）と同じ問題）
+- SDPには**電話機のIPアドレスとポート番号**が書かれている → **NAPT**（Network Address Port Translation）はアプリケーションのデータの中を書き換えないので、**プライベートアドレスのまま相手に届き、音声が届かない**（FTP（File Transfer Protocol）と同じ問題）
 - 症状：**呼び出し・応答はできるのに、音声が聞こえない（片方向だけ聞こえる）**
 - 対策
   - **SIP ALG（Application Level Gateway）**：ルータ・FW（Firewall）がSIP・SDPの中のアドレスを書き換え、RTPの通信を一時的に許可する
@@ -73,7 +73,7 @@ tags: [ネスペ, VoIP, SIP, RTP, IP電話, アプリケーション層]
 
 ### ○ IP電話機の接続
 
-- **PoE（Power over Ethernet）**でスイッチから電力を供給する（電源工事が不要）
+- **PoE**（Power over Ethernet）でスイッチから電力を供給する（電源工事が不要）
 - **音声VLAN**：電話機の先にPCをつなぐ構成で、電話機の通信とPCの通信を別のVLANに分ける（音声だけ優先しやすくする）
 - 電話機の設定（SIPサーバのアドレス）をDHCP（Dynamic Host Configuration Protocol）のオプションで配る
 

@@ -120,7 +120,7 @@ tags: [ネスペ, FTP, ファイル転送, アプリケーション層]
 6. 応答コードは 227 だけ覚えればよい
 
 > [!tip] 得点につながる覚え方
-> FTPは**「アドレスとポート番号をデータの中で通知し、別のコネクションを後から張る」**プロトコルの代表。この構造がFW・NAPTと相性が悪い、という理由づけは **SIP／RTP（Real-time Transport Protocol、VoIP：Voice over IP）** でもそのまま使える。
+> FTPは「**アドレスとポート番号をデータの中で通知し、別のコネクションを後から張る**」プロトコルの代表。この構造がFW・NAPTと相性が悪い、という理由づけは **SIP／RTP（Real-time Transport Protocol、VoIP：Voice over IP）** でもそのまま使える。
 
 ## 6. 関連
 

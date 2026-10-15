@@ -63,7 +63,7 @@ tags: [ネスペ, IEEE802.1X, EAP, RADIUS, 認証, セキュリティ]
 
 - 認証（Authentication）・認可（Authorization）・アカウンティング（Accounting）を行う **AAA**（Authentication, Authorization, Accounting） のプロトコル
 - ポート：**UDP（User Datagram Protocol） 1812（認証）／1813（アカウンティング）**（古い実装は1645／1646）
-- **RADIUSクライアント＝オーセンティケータ（スイッチ・AP）**。RADIUSサーバ側に、IPアドレスと**共有シークレット（事前共有の鍵）**を登録しておく
+- **RADIUSクライアント＝オーセンティケータ（スイッチ・AP）**。RADIUSサーバ側に、IPアドレスと**共有シークレット**（事前共有の鍵）を登録しておく
   - 登録されていない機器からの要求は受け付けない
   - パスワード属性は共有シークレットで隠されるが、**それ以外の属性は平文**（△）
 - メッセージ：Access-Request／Access-Challenge／Access-Accept／Access-Reject

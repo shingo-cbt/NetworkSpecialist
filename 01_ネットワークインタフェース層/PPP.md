@@ -9,7 +9,7 @@ tags: [ネスペ, PPP, PPPoE, データリンク層]
 ## 1. PPPの基本（○）
 
 - **2点間（ポイントツーポイント）をつなぐデータリンク層のプロトコル**
-- もとは電話回線・専用線用。今は **PPPoE（PPP over Ethernet、Ethernet上でPPP（Point-to-Point Protocol）を使う）**として、ISP（Internet Service Provider）へのインターネット接続で使われる
+- もとは電話回線・専用線用。今は **PPPoE**（PPP over Ethernet、Ethernet上でPPP（Point-to-Point Protocol）を使う）として、ISP（Internet Service Provider）へのインターネット接続で使われる
 - PPPだけにある主な機能
   - **認証**（PAP（Password Authentication Protocol）／CHAP（Challenge Handshake Authentication Protocol））：ISPが契約者を確認できる
   - **IP（Internet Protocol）アドレスなどの自動割当て**（IPCP：IP Control Protocol）
@@ -41,7 +41,7 @@ tags: [ネスペ, PPP, PPPoE, データリンク層]
 
 - CHAPの流れ
   1. 認証する側（ISP）が、毎回違うランダムな値（**チャレンジ**）を送る
-  2. 利用者側が、チャレンジとパスワードを合わせて**ハッシュ値（MD5：Message Digest 5）**を計算して返す
+  2. 利用者側が、チャレンジとパスワードを合わせて**ハッシュ値**（MD5：Message Digest 5）を計算して返す
   3. ISP側も同じ計算をして、一致すれば認証成功
 - ISP側では、PPPの認証情報を**RADIUS（Remote Authentication Dial In User Service）サーバ**に問い合わせて確認することが多い → [[IEEE802.1X]]
 - 記述の型（CHAPの利点）：「パスワードそのものを送らず、毎回異なるチャレンジから計算した値で認証するため、盗聴されても悪用されにくいから」
@@ -49,7 +49,7 @@ tags: [ネスペ, PPP, PPPoE, データリンク層]
 ## 4. PPPoE（◎）
 
 - **PPPのフレームをEthernetフレームに入れて送る**仕組み。光回線（FTTH：Fiber To The Home）でISPに接続するときの定番
-- Ethernetの上でも、PPPの**認証（ISPの契約者確認）**と**アドレスの割当て**を使いたいから使う
+- Ethernetの上でも、PPPの**認証**（ISPの契約者確認）と**アドレスの割当て**を使いたいから使う
 
 ### 接続の流れ
 
@@ -220,7 +220,7 @@ tags: [ネスペ, PPP, PPPoE, データリンク層]
 - **IPv6 IPoE**：PPPを使わず、IPv6でそのまま接続する方式。網終端装置を通らない
 - 認証は「どの回線か」で行う（IDとパスワードは不要）
 - アドレスは、PPPのIPCPではなく、**RA／DHCPv6-PD**で受け取る
-- IPv4のWebサイトは、**IPv4 over IPv6（MAP-E、DS-Liteなど）**でIPv6の中に入れて運ぶ
+- IPv4のWebサイトは、**IPv4 over IPv6**（MAP-E、DS-Liteなど）でIPv6の中に入れて運ぶ
 
 ### このストーリーと試験の対応
 

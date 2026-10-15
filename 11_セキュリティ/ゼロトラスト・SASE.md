@@ -29,7 +29,7 @@ SWG（Secure Web Gateway）への移行は、令和4年春 午後Ⅰ 問2「セ�
 
 | 要素 | 役割 |
 |---|---|
-| **IdP（Identity Provider）** | 利用者の認証を一元化する。**SSO（Single Sign-On）**と**多要素認証** → [[SAML]] |
+| **IdP（Identity Provider）** | 利用者の認証を一元化する。**SSO**（Single Sign-On）と**多要素認証** → [[SAML]] |
 | **SWG** | **Webアクセスを中継・検査するクラウドのプロキシ**。URL（Uniform Resource Locator）フィルタリング、マルウェア検査、TLS（Transport Layer Security）インスペクション |
 | **CASB（Cloud Access Security Broker）** | **クラウドサービスの利用を可視化・制御**する。許可していないクラウドサービスの利用（シャドーIT）の発見、データの持ち出しの制限 |
 | **ZTNA（Zero Trust Network Access）** | VPNの代わりに、**アプリケーション単位で**社内のシステムへのアクセスを許可する。ネットワーク全体には入れない |

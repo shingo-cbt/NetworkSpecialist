@@ -13,7 +13,7 @@ tags: [ネスペ, SMTP, メール, アプリケーション層]
    メールソフト                  （MX（Mail Exchanger）を引いて配送）       メールボックスに保存
 ```
 
-- **SMTP（Simple Mail Transfer Protocol）**：メールを**送る（転送する）**プロトコル
+- **SMTP（Simple Mail Transfer Protocol）**：メールを**送る**（転送する）プロトコル
   - PC → 送信側メールサーバ、メールサーバ → メールサーバの両方で使う
 - **POP3（Post Office Protocol version 3）／IMAP（Internet Message Access Protocol）**：受信者がメールボックスから**受け取る**プロトコル → [[POP・IMAP]]
 - 送信側メールサーバは、宛先ドメインの**MXレコード**をDNS（Domain Name System）で引いて、配送先のメールサーバを決める → [[DNS]]
@@ -23,7 +23,7 @@ tags: [ネスペ, SMTP, メール, アプリケーション層]
 | ポート | 用途 | 認証 |
 |---|---|---|
 | **TCP（Transmission Control Protocol） 25** | **メールサーバ同士の転送** | なし（相手を問わず受け付ける） |
-| **TCP 587（サブミッションポート）** | **PC → 送信側メールサーバ**（メールの投稿） | **SMTP-AUTH（SMTP認証）**でユーザを確認する |
+| **TCP 587（サブミッションポート）** | **PC → 送信側メールサーバ**（メールの投稿） | **SMTP-AUTH**（SMTP認証）でユーザを確認する |
 | TCP 465（SMTPS（SMTP over SSL/TLS）） | PC → 送信側メールサーバ（最初からTLS（Transport Layer Security）で暗号化） | SMTP-AUTH |
 
 - **STARTTLS**：25番や587番で接続した後、途中からTLSに切り替える

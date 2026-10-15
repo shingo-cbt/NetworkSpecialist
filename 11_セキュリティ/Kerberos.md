@@ -10,7 +10,7 @@ tags: [ネスペ, Kerberos, SSO, 認証, Active Directory, セキュリティ]
 
 ## 1. Kerberosの基本（○）
 
-- **Kerberos（ケルベロス）**：**チケット**を使って、社内のサーバへの**シングルサインオン（SSO（Single Sign-On））**を実現する認証の仕組み
+- **Kerberos（ケルベロス）**：**チケット**を使って、社内のサーバへの**シングルサインオン**（SSO（Single Sign-On））を実現する認証の仕組み
   - 一度ログオンすれば、ファイルサーバ・業務サーバなどを**パスワードを入れ直さずに**使える
   - **パスワードそのものはネットワークに流れない**
 - **Active Directory**（Windowsの認証基盤）の中心的な仕組み。ADのドメインコントローラがKDCの役割を持つ → [[LDAP]]
@@ -18,7 +18,7 @@ tags: [ネスペ, Kerberos, SSO, 認証, Active Directory, セキュリティ]
 
 | 用語 | 内容 |
 |---|---|
-| **KDC（Key Distribution Center）** | 認証とチケットの発行を行うサーバ。**AS（Authentication Server）**と**TGS（Ticket Granting Server）**の2つの役割を持つ |
+| **KDC（Key Distribution Center）** | 認証とチケットの発行を行うサーバ。**AS**（Authentication Server）と**TGS**（Ticket Granting Server）の2つの役割を持つ |
 | **TGT（Ticket Granting Ticket）** | 「認証済みの利用者である」ことを示すチケット。**STをもらうための引換券** |
 | **ST（Service Ticket）** | **特定のサーバを使うためのチケット**。サーバごとに発行される |
 
@@ -48,7 +48,7 @@ PC（利用者）                     KDC（AS・TGS）                 業務�
 
 ### 時刻の同期が必須
 
-- チケットには**有効期限**があり、要求には**時刻（タイムスタンプ）**が入っている → **再送攻撃（盗聴した通信の使い回し）を防ぐ**
+- チケットには**有効期限**があり、要求には**時刻**（タイムスタンプ）が入っている → **再送攻撃（盗聴した通信の使い回し）を防ぐ**
 - PCとサーバ・KDCの**時刻のずれが大きい（初期値5分）と認証に失敗**する
 - 記述の型（令和4年春 午後Ⅰ 問3の解答）：「PCとサーバの間で時刻同期を行う」
 - → [[NTP]]

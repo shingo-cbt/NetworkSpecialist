@@ -24,7 +24,7 @@ tags: [ネスペ, IPv6, IPv6移行, IPoE, インターネット層]
 
 | 方式 | 内容 |
 |---|---|
-| **SLAAC（Stateless Address Autoconfiguration）** | ルータの**RA（Router Advertisement）**でプレフィックスを受け取り、端末が自分でインタフェースIDを作る |
+| **SLAAC（Stateless Address Autoconfiguration）** | ルータの**RA**（Router Advertisement）でプレフィックスを受け取り、端末が自分でインタフェースIDを作る |
 | **DHCPv6（ステートレス）** | アドレスはSLAACで作り、**DNSサーバのアドレスなどだけ**をDHCPv6でもらう |
 | **DHCPv6（ステートフル）** | アドレスもDHCPv6サーバから割り当てる（誰に何を割り当てたか管理できる） |
 | **DHCPv6-PD（Prefix Delegation）** | ISP（Internet Service Provider）がルータに**プレフィックスをまとめて委任**し、ルータがLAN（Local Area Network）側に配る |
@@ -50,7 +50,7 @@ tags: [ネスペ, IPv6, IPv6移行, IPoE, インターネット層]
 
 ### IPv4 over IPv6（◎：日本の家庭・企業のインターネット接続）
 
-- 日本では、フレッツ網の**IPoE（IP over Ethernet）**でIPv6接続し、**IPv4の通信をIPv6の中に入れて運ぶ**方式が普及している
+- 日本では、フレッツ網の**IPoE**（IP over Ethernet）でIPv6接続し、**IPv4の通信をIPv6の中に入れて運ぶ**方式が普及している
   - PPPoE（Point-to-Point Protocol over Ethernet）の網終端装置の混雑を避けられる → [[PPP]]
 
 | 方式 | NAPT（Network Address Port Translation）する場所 | ポイント |
@@ -114,7 +114,7 @@ tags: [ネスペ, IPv6, IPv6移行, IPoE, インターネット層]
 6. 6to4、ISATAPなどの古いトンネル技術は名前を知っている程度でよい
 
 > [!tip] 得点につながる覚え方
-> IPv6は直近の午後Ⅱで大問として出ている。**「アドレスをどう配るか」「DNSで何が返り、どちらで通信するか」「IPv4とIPv6の両方を守れているか」**の3つの観点で構成図を読む。
+> IPv6は直近の午後Ⅱで大問として出ている。「**アドレスをどう配るか」「DNSで何が返り、どちらで通信するか」「IPv4とIPv6の両方を守れているか**」の3つの観点で構成図を読む。
 
 ## 6. 関連
 
