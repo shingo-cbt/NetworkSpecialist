@@ -18,14 +18,27 @@ tags: [ネスペ, HTTP, Web, アプリケーション層]
 
 ```
 GET /index.html HTTP/1.1          ← リクエスト行（メソッド、パス、バージョン）
-Host: www.example.jp              ← ヘッダ
+Host: www.example.jp              ← ヘッダ（1行に1つ。何行でも並べられる）
+User-Agent: Mozilla/5.0 ...
 Cookie: session=abc123
+Accept-Language: ja
+X-Forwarded-For: 203.0.113.5
+                                  ← 空行：ヘッダはここまで
+（ボディ：POSTで送るデータなど。GETでは通常なし）
 
 HTTP/1.1 200 OK                    ← ステータス行
 Content-Type: text/html
 Set-Cookie: session=abc123
-（本文）
+Set-Cookie: lang=ja                ← 同じヘッダを複数行に分けて書くこともある
+                                   ← 空行
+（ボディ：HTMLなどの本文）
 ```
+
+- **ヘッダは1行に1つ**書き、**改行で追加**していく。**空行**で「ヘッダの終わり」を示し、その後ろに**ボディ**（本文）が続く
+- 同じヘッダを2回以上使う場合
+  - **複数行に分けて書く**：サーバがCookieを2つ渡すときは、`Set-Cookie` を2行書く
+  - **1行にカンマで並べる**：`Accept-Language: ja, en`
+  - **1つだけ**：`Host` は、HTTP/1.1のリクエストに**ちょうど1つ**必須。2つあるとエラーになる
 
 ### 主なメソッド（○）
 
@@ -78,6 +91,16 @@ Set-Cookie: session=abc123
 | Cache-Control | キャッシュしてよいか、期間 | − |
 | **Upgrade** | 別のプロトコル（WebSocketなど）への切替 | [[WebSocket]] |
 | Strict-Transport-Security | **HSTS（HTTP Strict Transport Security）**：ブラウザに「一定期間このサイトにはHTTPSでしか接続しない」と指示する（max-age：期間、includeSubDomains：サブドメインも対象） | [[TLS]] |
+
+- **X-Forwarded-For が複数並ぶ場合**（△〜○）：プロキシやLBを**何段も経由**すると、それぞれの装置が、**受け取った通信の送信元を後ろに追加**していく
+
+```
+X-Forwarded-For: 203.0.113.5, 198.51.100.7
+                 └─利用者──┘  └─途中のプロキシ─┘
+```
+
+  - **一番左が、元の利用者のIPアドレス**。Webサーバのログで利用者を確認するときは、ここを見る
+  - LBでSNAT（Source NAT、NAT：Network Address Translation）すると、サーバからは送信元がLBに見えるので、このヘッダで利用者のアドレスを渡す → [[負荷分散装置]]
 
 ## 4. HTTPのバージョン（○）
 

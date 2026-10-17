@@ -44,19 +44,19 @@ tags: [ネスペ, ICMP, ネットワーク層]
 
 ## 3. ICMPv6の主なメッセージ
 
-| Type | 名前 | ポイント | 出題度 |
-|---|---|---|---|
-| 1 | Destination Unreachable | v4のType 3に相当 | △ |
-| 2 | Packet Too Big | IPv6はルータで分割しないため、PMTUDに必須 | ○ |
-| 3 | Time Exceeded | v4のType 11に相当（Hop Limit） | △ |
-| 4 | Parameter Problem | v4のType 12に相当 | △ |
-| 128 | Echo Request | ping | △ |
-| 129 | Echo Reply | ping応答 | △ |
-| 133 | RS（Router Solicitation） | ホスト→ルータ「ルータいる？」 | ◎ |
-| 134 | RA（Router Advertisement） | ルータ→ホスト。プレフィックス通知（SLAAC：Stateless Address Autoconfiguration） | ◎ |
-| 135 | NS（Neighbor Solicitation） | ARP（Address Resolution Protocol）要求の代わり、DAD（Duplicate Address Detection、重複アドレス検出） | ◎ |
-| 136 | NA（Neighbor Advertisement） | ARP応答の代わり | ◎ |
-| 137 | Redirect | v4のType 5に相当 | △ |
+| Type | 名前                         | ポイント                                                                             | 出題度 |
+| ---- | -------------------------- | -------------------------------------------------------------------------------- | --- |
+| 1    | Destination Unreachable    | v4のType 3に相当                                                                     | △   |
+| 2    | Packet Too Big             | IPv6はルータで分割しないため、PMTUDに必須                                                        | ○   |
+| 3    | Time Exceeded              | v4のType 11に相当（Hop Limit）                                                         | △   |
+| 4    | Parameter Problem          | v4のType 12に相当                                                                    | △   |
+| 128  | Echo Request               | ping                                                                             | △   |
+| 129  | Echo Reply                 | ping応答                                                                           | △   |
+| 133  | RS（Router Solicitation）    | ホスト→ルータ「ルータいる？」                                                                  | ◎   |
+| 134  | RA（Router Advertisement）   | ルータ→ホスト。プレフィックス通知（SLAAC：Stateless Address Autoconfiguration）                     | ◎   |
+| 135  | NS（Neighbor Solicitation）  | ARP（Address Resolution Protocol）要求の代わり、DAD（Duplicate Address Detection、重複アドレス検出） | ◎   |
+| 136  | NA（Neighbor Advertisement） | ARP応答の代わり                                                                        | ◎   |
+| 137  | Redirect                   | v4のType 5に相当                                                                     | △   |
 
 - 133〜137はNDP（Neighbor Discovery Protocol、近隣探索プロトコル）。ARPの役割をICMPv6が担う
 - NDPは**Type番号より名前と役割の対応**が問われる
