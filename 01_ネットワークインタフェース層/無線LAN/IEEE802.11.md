@@ -19,15 +19,15 @@ tags: [ネスペ, 無線LAN, IEEE802.11, データリンク層]
 
 ## 2. 規格の一覧
 
-| 規格 | 通称 | 周波数帯 | 最大速度 | 主な技術・ポイント | 出題度 |
-|---|---|---|---|---|---|
-| 802.11b | − | 2.4GHz | 11Mbps | DSSS（Direct Sequence Spread Spectrum） | △ |
-| 802.11a | − | 5GHz | 54Mbps | OFDM（Orthogonal Frequency Division Multiplexing） | △ |
-| 802.11g | − | 2.4GHz | 54Mbps | OFDM。11bと互換 | △ |
-| 802.11n | Wi-Fi 4 | 2.4／5GHz | 600Mbps | OFDM＋**MIMO**（Multiple Input Multiple Output）、**チャネルボンディング**（40MHz） | ○ |
-| 802.11ac | Wi-Fi 5 | 5GHz | 6.9Gbps | OFDM、ボンディング（80／160MHz）、**下りMU-MIMO**（Multi-User MIMO）、256QAM | ○ |
-| 802.11ax | Wi-Fi 6／6E | 2.4／5（／6）GHz | 9.6Gbps | **OFDMA**（Orthogonal Frequency Division Multiple Access）、ボンディング（160MHz）、上り下りMU-MIMO、1024QAM、BSSカラーリング、TWT（Target Wake Time） | ◎ |
-| 802.11be | Wi-Fi 7 | 2.4／5／6GHz | 約46Gbps | ボンディング（320MHz）、**MLO**（Multi-Link Operation、複数帯域の同時利用） | △ |
+| 規格       | 通称         | 周波数帯         | 最大速度    | 主な技術・ポイント                                                                                                                   | 出題度 |
+| -------- | ---------- | ------------ | ------- | --------------------------------------------------------------------------------------------------------------------------- | --- |
+| 802.11b  | −          | 2.4GHz       | 11Mbps  | DSSS（Direct Sequence Spread Spectrum）                                                                                       | △   |
+| 802.11a  | −          | 5GHz         | 54Mbps  | OFDM（Orthogonal Frequency Division Multiplexing）                                                                            | △   |
+| 802.11g  | −          | 2.4GHz       | 54Mbps  | OFDM。11bと互換                                                                                                                 | △   |
+| 802.11n  | Wi-Fi 4    | 2.4／5GHz     | 600Mbps | OFDM＋**MIMO**（Multiple Input Multiple Output）、**チャネルボンディング**（40MHz）                                                         | ○   |
+| 802.11ac | Wi-Fi 5    | 5GHz         | 6.9Gbps | OFDM、ボンディング（80／160MHz）、**下りMU-MIMO**（Multi-User MIMO）、256QAM                                                                | ○   |
+| 802.11ax | Wi-Fi 6／6E | 2.4／5（／6）GHz | 9.6Gbps | **OFDMA**（Orthogonal Frequency Division Multiple Access）、ボンディング（160MHz）、上り下りMU-MIMO、1024QAM、BSSカラーリング、TWT（Target Wake Time） | ◎   |
+| 802.11be | Wi-Fi 7    | 2.4／5／6GHz   | 約46Gbps | ボンディング（320MHz）、**MLO**（Multi-Link Operation、複数帯域の同時利用）                                                                      | △   |
 
 - **変調方式は11bだけがDSSSで、11a以降はすべてOFDM**（11ax以降はOFDMを複数端末で分け合うOFDMA）
 - **MIMO**：複数アンテナで複数ストリームを同時に送り、速度を上げる
@@ -47,6 +47,24 @@ tags: [ネスペ, 無線LAN, IEEE802.11, データリンク層]
 
 - チャネルは1〜13（11bのみ14）。間隔は5MHzだが1チャネルは約20MHz幅
 - **重ならない組み合わせは 1・6・11**（日本では1・5・9・13の4つも可）
+  - 意味：チャネルの番号は**中心の周波数が5MHzずつ**ずれているが、1つのチャネルは中心から左右に約10MHzずつ、**約20MHzの幅**を使う → 隣の番号どうしはほとんど重なる
+
+| チャネル | 1 | 2 | 3 | … | 6 | … | 11 | … | 13 |
+|---|---|---|---|---|---|---|---|---|---|
+| 中心の周波数（MHz） | 2412 | 2417 | 2422 | （5MHzずつ） | 2437 | | 2462 | | 2472 |
+
+```
+周波数 →  2402      2412      2422      2432      2442      2452      2462      2472
+ch1    [====|====]                                   ← 2402〜2422 を使う
+ch2         [====|====]                              ← 2407〜2427（ch1とほぼ重なる）
+ch6                        [====|====]               ← 2427〜2447（ch1と重ならない）
+ch11                                      [====|====] ← 2452〜2472（ch6と重ならない）
+```
+
+  - 重ならないためには中心を20MHz以上（余裕を見て25MHz）離す → 番号で**5つ**離す → 1、6、11
+  - 隣のAPでch1とch2のように**近い番号**を使うと電波が重なって干渉する（同じ番号を使うより悪くなることもある）
+  - 午後のチャネル設計：隣り合うAPに1・6・11を順に割り当て、同じチャネルのAPが隣り合わないように配置する。重ならないチャネルが3つしかないので、APが多い場所では5GHz帯を使う
+  - 覚え方：**「番号は5MHz刻みだが、1つのチャネルは20MHzの太さ。5つ離して、1・6・11」**
 - 電子レンジ、Bluetoothなどと**干渉しやすい**
 - 障害物に強く、遠くまで届く
 

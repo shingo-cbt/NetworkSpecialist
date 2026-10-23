@@ -8,7 +8,7 @@ tags: [ネスペ, WPA, 無線LAN, 暗号化, セキュリティ]
 
 ## 1. WPAの基本（○）
 
-- 無線LAN（Local Area Network）の**暗号化と認証**の規格（Wi-Fi Allianceが認定。元になる規格はIEEE802.11i）
+- 無線LAN（Local Area Network）の**暗号化と認証**の規格（Wi-Fi Allianceが認定。元になる規格はIEEE802.11i。WPAは802.11iの策定途中の版、WPA2が802.11iの完成版を実装したもの。WPA3はさらにSAE（Simultaneous Authentication of Equals）やPMF（Protected Management Frames）を加えたもの）
 - 世代
 
 | 世代 | 暗号方式 | ポイント | 出題度 |
@@ -16,7 +16,7 @@ tags: [ネスペ, WPA, 無線LAN, 暗号化, セキュリティ]
 | WEP（Wired Equivalent Privacy） | RC4 | 短時間で鍵が解読される。**使ってはいけない** | ○（誤りの選択肢） |
 | WPA（Wi-Fi Protected Access） | **TKIP**（Temporal Key Integrity Protocol、RC4ベース） | WEPからの移行用の暫定規格 | △ |
 | **WPA2** | **CCMP（Counter mode with CBC-MAC Protocol、AES：Advanced Encryption Standard）** | 長く標準だった方式 | ◎ |
-| **WPA3** | CCMP（AES）／GCMP-256 | **SAE**（Simultaneous Authentication of Equals）、**PMF（Protected Management Frames）必須**、192ビットモード | ◎ |
+| **WPA3** | CCMP（AES）／GCMP-256 | **SAE**、**PMF必須**、192ビットモード | ◎ |
 
 - 午前の定番：「WPA2で使われる暗号方式」→ AES（CCMP）。「WEPの脆弱性」
 - TKIPは11n以降の高速通信に使えない（11nはCCMPが前提）（△）
@@ -43,7 +43,7 @@ tags: [ネスペ, WPA, 無線LAN, 暗号化, セキュリティ]
 
 - **PMK（ペアワイズマスタ鍵）**：鍵の元
   - パーソナル：パスフレーズとSSIDから計算
-  - エンタープライズ：802.1X（EAP）の認証成功時にRADIUSサーバとAPが共有する
+  - エンタープライズ：802.1X（EAP）の認証の結果から、**端末とRADIUSサーバがそれぞれ**計算する。RADIUSサーバは、認証成功の通知（Access-Accept）と一緒にAPへ渡す → 端末とAPが同じPMKを持つ（PMKそのものは無線では送らない）
 - **4ウェイハンドシェイク**：PMKを直接は送らずに、APと端末が互いに乱数（ANonce、SNonce）を交換して、次の鍵を作る
   - **PTK**（Pairwise Transient Key、ペアワイズ一時鍵）：その端末とAPのユニキャスト通信用。**接続ごとに変わる**
   - **GTK**（Group Temporal Key、グループ一時鍵）：ブロードキャスト・マルチキャスト用。APが全端末に配る
@@ -57,7 +57,7 @@ tags: [ネスペ, WPA, 無線LAN, 暗号化, セキュリティ]
 | **SAE**（パーソナル） | パスフレーズを使った新しい鍵交換。**オフラインの辞書攻撃に強い**。パスフレーズが後で漏れても、過去の通信は復号できない（前方秘匿性） |
 | **PMF**（管理フレーム保護、802.11w） | **切断（デオーセンティケーション）フレームの偽装**などを防ぐ。WPA3では必須 |
 | 192ビットモード（エンタープライズ） | より強い暗号（GCMP-256など）を使う |
-| **OWE**（Enhanced Open） | パスワードなしの公衆無線LANでも、通信を端末ごとに暗号化する |
+| **OWE**（Opportunistic Wireless Encryption。認定名はWi-Fi Enhanced Open） | パスワードなしの公衆無線LANでも、通信を端末ごとに暗号化する。厳密にはWPA3とは別の認定だが、同時期に登場し、セットで扱われることが多い |
 
 - 問われ方：「WPA3-PersonalでSAEを使う利点」「PMFで防げる攻撃」
 - 記述の型（PMF）：「管理フレームを保護し、偽装した切断フレームによる通信妨害を防ぐ」
@@ -88,7 +88,8 @@ tags: [ネスペ, WPA, 無線LAN, 暗号化, セキュリティ]
 
 ## 6. 覚え方
 
-- **世代と暗号は「WEP＝RC4（ダメ）、WPA＝TKIP（つなぎ）、WPA2＝AES、WPA3＝SAE」**
+- **世代と暗号は「WEP＝RC4（ダメ）、WPA＝TKIP（つなぎ）、WPA2＝AES、WPA3＝AESのまま鍵交換がSAE」**
+  - 注意：**WPA3でもデータの暗号化はAES**（CCMP。192ビットモードだけGCMP-256）。WPA3で変わったのは**鍵の決め方**（PSK → SAE）と**PMFの必須化**。「WPA3はAESに代わる新しい暗号で暗号化する」は誤り
 - **パーソナルは「家の合鍵を全員に配る」、エンタープライズは「社員証で一人ずつ入館」**
   - 合鍵は、1本なくすと全部の鍵を替える必要がある
 - **4ウェイは「PMK（元の鍵）は送らず、乱数を交換して、その場限りの鍵（PTK）を作る」**
