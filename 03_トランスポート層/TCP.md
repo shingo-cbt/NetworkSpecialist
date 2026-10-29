@@ -59,6 +59,14 @@ tags: [ネスペ, TCP, トランスポート層]
 - 最後にACKを送った側は、しばらく **TIME_WAIT** 状態で待つ（遅れて届くパケットへの対応、△）
 - **RST**：その場で強制的に切断する。**待ち受けていないポートへのSYN**には、RSTが返る（UDPの場合はICMP（Internet Control Message Protocol）のポート到達不能が返る）
 
+### TCPのコネクションが張られる区間（○）
+
+- TCPのコネクションは、**TCPを終端する機器どうし**の間に張られる
+  - プロキシ経由：PC ↔ プロキシ、プロキシ ↔ Webサーバの**2本**（プロキシが代わりに接続し直す）
+  - ダイヤルアップ・PPPoE：PC ↔ Webサーバの**1本**（PPPはデータリンク層の接続）
+  - NAT（Network Address Translation）ルータ：PC ↔ Webサーバの**1本**（ヘッダを書き換えるだけ）
+- TLS（Transport Layer Security）の区間はTCPと違うことがある（HTTPS（HTTP Secure）のCONNECTでは、TCPは2本でもTLSは1本）→ 一覧は [[TLS]]
+
 ## 4. 信頼性：再送（○）
 
 - 受信側は、受け取った分を**ACK番号**で知らせる。送信側はACKが来るまでデータを保持する
