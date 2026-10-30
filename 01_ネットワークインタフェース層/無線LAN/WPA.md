@@ -13,7 +13,7 @@ tags: [ネスペ, WPA, 無線LAN, 暗号化, セキュリティ]
 
 | 世代 | 暗号方式 | ポイント | 出題度 |
 |---|---|---|---|
-| WEP（Wired Equivalent Privacy） | RC4 | 短時間で鍵が解読される。**使ってはいけない** | ○（誤りの選択肢） |
+| WEP（Wired Equivalent Privacy） | RC4（1バイト単位の**ストリーム暗号**で、共通鍵暗号。APと全端末で**同一**のWEPキーを使い続ける） | 短時間で鍵が解読される。**使ってはいけない** | ○（誤りの選択肢） |
 | WPA（Wi-Fi Protected Access） | **TKIP**（Temporal Key Integrity Protocol、RC4ベース） | WEPからの移行用の暫定規格 | △ |
 | **WPA2** | **CCMP（Counter mode with CBC-MAC Protocol、AES：Advanced Encryption Standard）** | 長く標準だった方式 | ◎ |
 | **WPA3** | CCMP（AES）／GCMP-256 | **SAE**、**PMF必須**、192ビットモード | ◎ |
