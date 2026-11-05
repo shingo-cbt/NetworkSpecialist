@@ -11,6 +11,8 @@ tags: [ネスペ, Syslog, ログ, 運用管理, アプリケーション層]
 - **Syslog**：ネットワーク機器やサーバの**ログ（イベントの記録）を、ログサーバに送って集める**仕組み
 - ポート：**UDP（User Datagram Protocol） 514**（TCP（Transmission Control Protocol）や、TLS（Transport Layer Security）で暗号化するTCP 6514もある）
 - 機器 → ログサーバの**一方向**に送る（ログサーバは応答しない）
+- 規格：**RFC（Request for Comments） 5424**。問題文では「イベント通知を転送する標準規格」と書かれる（令和4年春 午後Ⅰ 問1。採点講評で正答率が低かった）
+- SNMP（Simple Network Management Protocol）との違い：Syslogは機器が**ログ（イベント）を送る**。SNMPは監視サーバが機器の**状態を取りに行く**（ポーリング）か、機器が異常を知らせる（トラップ）
 - 各メッセージには**ファシリティ**（どの機能のログか）と**重要度**（シビリティ）が付く
 
 ### 重要度（○）
