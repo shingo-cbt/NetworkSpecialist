@@ -70,6 +70,12 @@ SWG（Secure Web Gateway）への移行は、令和4年春 午後Ⅰ 問2「セ�
 
 - 拠点から**クラウドサービスへの通信を、本社を経由せず直接インターネットへ**出す（SD-WAN）→ その代わりにSWGで検査する
 
+### ○ SGWサービスへ切り替えるときの確認（令和4年春 午後Ⅰ 問2）
+
+- 拠点やテレワークのPCから、クラウドのSGW（Secure Gateway）サービスのPOP（Point of Presence）へIPsec（Security Architecture for Internet Protocol） VPNで接続し、SGWのFW機能でNAPT（Network Address Port Translation）してインターネットへ出る
+- **SaaS（Software as a Service）の送信元IPアドレス制限**：SGWのNAPT後のアドレスで許可する。SGWは他社にも提供されているので、そのアドレスが**自社専用か**をSGWの事業者に確認する（共用なら他社からのアクセスも許可してしまう）
+- **応答時間が長くなる要因**：**SGWサービスを経由することによる遅延**（経路が変わる、サービス内の処理）。記述は「インターネットを経由する」ではなく、構成図のサービス名で書く
+
 ## 4. 攻撃者の観点：どこを突くか
 
 | 狙う所 | 攻撃のしかた | 成り立つ条件 |

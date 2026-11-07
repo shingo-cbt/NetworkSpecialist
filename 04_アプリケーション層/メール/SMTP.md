@@ -49,6 +49,15 @@ tags: [ネスペ, SMTP, メール, アプリケーション層]
   - サーバどうし（送信側 → 受信側、TCP 25）も同じ流れ。違いは、SMTP-AUTHがないことと、相手のサーバをDNSのMXで探すこと
   - 覚え方：**「メールは（MAIL）誰から（FROM）、受取人は（RCPT）誰へ（TO）、それから中身（DATA）」**
 
+- **自分の言葉のまとめ（送信側のメールサーバ → 受信側のメールサーバ）**
+  - DNSの**MXレコード**を引き、受信側のメールサーバのFQDN（Fully Qualified Domain Name）を調べる
+  - MXが複数あれば、**Preference（優先度）の値が小さい方**を選ぶ
+  - 全部止まっていたら、メールを**キュー**にためて、間隔を空けて再送する（蓄積転送）。それでも届かなければ、**エンベロープFrom**（MAIL FROM）の宛先にエラーメールを返す
+  - 受信側のメールサーバのFQDNの**Aレコード**を引き、IPアドレスを得る
+  - 得たIPアドレス宛てに、**TCP 25**でSMTPの接続をする
+  - 接続後のコマンド（EHLO、MAIL FROM、RCPT TO、DATA）は同じ。サーバどうしのやり取りでは**利用者認証（SMTP-AUTH）はしない**
+  - 受信側のサーバが送信元を確かめる流れ（逆引き・正引きの一致、SPF・DKIM（DomainKeys Identified Mail）・DMARC（Domain-based Message Authentication, Reporting and Conformance））は → [[DNS]]の「逆引きによる確認の流れ」、[[SPF・DKIM・DMARC]]
+
 - **応答コード**：先頭の数字で意味が決まる
 
 | コード | 意味 | 送信側の動き |
