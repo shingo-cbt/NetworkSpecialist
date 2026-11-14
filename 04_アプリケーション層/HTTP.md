@@ -220,6 +220,17 @@ https://www.example.jp/shop/cart.html
 ### ◎ Cookieとセッション維持
 
 - LBで振り分けるとき、Cookieを見て同じサーバに送る → HTTPSならLBでTLSを終端する必要がある
+- **Set-CookieとCookieの向き**（11/14に追記）：**Set-Cookie**はレスポンスのヘッダ（サーバ → ブラウザ、「これを覚えて」）、**Cookie**はリクエストのヘッダ（ブラウザ → サーバ、「前にもらった値です」）。属性はSet-Cookieにだけ付き、Cookieでは名前＝値だけを送る
+- **Cookieの主な属性**（平成27年秋 午後Ⅰ 問1）
+
+| 属性 | 意味 | 問われ方 |
+|---|---|---|
+| **Domain** | どのドメイン（とサブドメイン）に送るか | SSO（Single Sign-On）で複数のサーバ（eigyo.a-sha.example.jp、kokoku.a-sha.example.jp）にCookieを送らせるには、共通の上位ドメイン（a-sha.example.jp）を指定する |
+| **Secure** | **HTTPSのときだけ**送る | 全ページをHTTPSにしても、HTTPで接続されたときにCookieが平文で流れる → **Secure属性を付ける**（採点講評で正答率が低かった） |
+| **HttpOnly** | JavaScriptから読めない | XSS（Cross-Site Scripting）でCookieを盗まれるのを防ぐ |
+| SameSite（△） | 別サイトからのリクエストには送らない | CSRFを防ぐ |
+
+  - 覚え方：**「Set-Cookieは番号札を渡すこと、Cookieは番号札を見せること。札の注意書き（Secure、HttpOnly、Domain）は渡すときだけ付ける」**
 - → [[負荷分散装置]]
 
 ### ○ リダイレクト
