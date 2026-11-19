@@ -50,6 +50,7 @@ PC1 ──L2SW── R1 ──────── R2 ──────── PC2
 
 - PCが「PC2宛てはR1に渡す」と決めるのは**経路表**（デフォルトルート 0.0.0.0/0 → R1）。ARPテーブルは、そのR1のMACアドレスを引くだけ
 - **L2SWは転送にARPテーブルを使わない**。宛先MACアドレスとMACアドレステーブルだけで転送する
+  - ブロードキャスト（フレームの種類）・Unknown Unicast（スイッチが宛先を知らない状況）・フラッディング（スイッチの動作）の一連の流れ → [[VLAN]]の「前提：L2スイッチの基本動作」
   - MACアドレステーブルは、受信したフレームの**送信元MACアドレス**から学習する。宛先が未学習なら**フラッディング**する → [[VLAN]]
   - 例外：管理用のIPアドレスを持つL2SWは、自分の通信（SNMP（Simple Network Management Protocol）、SSH（Secure Shell）、Syslog）のためにARPテーブルを持つ。通過するフレームの転送には使わない
 - 似た名前に注意：**DHCP（Dynamic Host Configuration Protocol）スヌーピングのバインディングテーブル**（IP、MAC、ポート、VLAN（Virtual LAN））はL2SWが持つが、ARPテーブルではない → [[DHCP]]
