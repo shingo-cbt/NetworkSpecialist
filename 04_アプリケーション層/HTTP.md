@@ -111,6 +111,7 @@ PC ← プロキシ   200 OK（通った） / 407（違った）
 | **Cookie／Set-Cookie** | セッション管理。LBの**セッション維持**にも使う | [[負荷分散装置]] |
 | **Location** | リダイレクト先のURL | − |
 | **X-Forwarded-For** | プロキシ・LBが、**元のクライアントのIPアドレス**を書き込む | [[負荷分散装置]] |
+| **X-Forwarded-Proto** | プロキシ・LBが、**元のプロトコル（httpかhttpsか）**を書き込む。SSLオフロードでLB〜サーバ間がHTTPになっても、アプリが「利用者はHTTPSで来た」と分かる（分からないと、HTTPSへのリダイレクトを繰り返す無限ループになる）。11/20に追記 | [[負荷分散装置]] |
 | Authorization／**Proxy-Authorization** | サーバ／プロキシへの認証情報 | − |
 | Cache-Control | キャッシュしてよいか、期間 | − |
 | **Upgrade** | 別のプロトコル（WebSocketなど）への切替 | [[WebSocket]] |

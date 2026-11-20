@@ -54,6 +54,11 @@ _dmarc.example.jp.          TXT "v=DMARC1; p=reject; rua=mailto:dmarc-report@exa
   - クラウドのメールサービスに移行して、自社から送ったメールが迷惑メールと判定される → MXではなく**SPFに送信元を追加し忘れ**ている
 - DMARCのポリシー（p=）：**none**（何もしない、レポートだけ）→ **quarantine**（隔離、迷惑メールフォルダへ）→ **reject**（受信拒否）
 - **rua**：受信側から集計レポートを受け取るアドレス → 自社のドメインを名乗るなりすましの状況が分かる
+- **アライメントのモード**（○、11/20に追記）：ヘッダのFromのドメインと、SPF・DKIMで認証されたドメインを、どこまで厳しく比べるか
+  - **relaxed（r）**：組織のドメインが同じなら一致（例：From: example.co.jp と d=mail.example.co.jp は一致）。**デフォルト**
+  - **strict（s）**：完全に同じドメインでなければ不一致
+  - タグ：DKIMは **adkim=**、SPFは **aspf=**（例：`v=DMARC1; p=reject; adkim=s; aspf=r; rua=mailto:…`）
+  - 覚え方：「**r＝relaxed（ゆるい、サブドメインもOK）、s＝strict（厳しい、完全一致）**」
 
 ## 2. それぞれの弱点とDMARCが必要な理由（◎）
 
